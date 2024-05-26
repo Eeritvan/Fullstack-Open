@@ -1,0 +1,6 @@
+.env
+.gitignore
+node_modules
+.eslintcache
+.eslintignore
+node_modules/.eslintrc.js
