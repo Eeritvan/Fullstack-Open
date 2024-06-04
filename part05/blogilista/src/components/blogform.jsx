@@ -1,8 +1,8 @@
 import Togglable from './togglable'
 import { useState, useRef } from 'react'
 import blogService from '../services/blogs'
-import userService from '../services/users'
 import { Notification, handleNotification } from './notification'
+import PropTypes from 'prop-types'
 
 const Blog = ({ blog, allBlogs, setBlogs, user }) => {
     const [visible, setVisible] = useState(true)
@@ -111,6 +111,21 @@ const BlogForm = ({ logOut, blogs, setBlogs, user, notification, setNotification
             {blogs.map(blog => <Blog key={blog.title} blog={blog} allBlogs={blogs} setBlogs={setBlogs} user={user} />)}
         </div>
     )
+}
+
+Blog.propTypes = {
+    blog: PropTypes.object.isRequired,
+    allBlogs: PropTypes.array.isRequired,
+    setBlogs: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired
+}
+
+BlogForm.propTypes = {
+    logOut: PropTypes.func.isRequired,
+    blogs: PropTypes.array.isRequired,
+    setBlogs: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    setNotification: PropTypes.func.isRequired
 }
 
 export default BlogForm
