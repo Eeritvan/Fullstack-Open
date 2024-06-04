@@ -57,7 +57,7 @@ describe('blog creation and retrieval', () => {
         assert.strictEqual(newLength, initialLength + 1)
     })
 
-    test('correct amount of blogs are returned', async () => {
+    test('correct amount of blogs.js are returned', async () => {
         const response = await api.get('/api/blogs')
         assert.strictEqual(response.headers['content-type'], 'application/json; charset=utf-8')
         const initialLength = helper.initialBlogs().length
@@ -65,7 +65,7 @@ describe('blog creation and retrieval', () => {
     })
 })
 
-describe('editing blogs', () => {
+describe('editing blogs.js', () => {
     test('editing a blog and checking if content was edited', async () => {
         const id = await api.get('/api/blogs').then(response => response.body[0].id)
         const updatedBlog = await ({
@@ -96,7 +96,7 @@ describe('editing blogs', () => {
     })
 })
 
-describe('deletion of blogs', () => {
+describe('deletion of blogs.js', () => {
     test('deleting one blog and checking new length', async() => {
         const id = await api.get('/api/blogs').then(response => response.body[0].id)
 

@@ -9,13 +9,11 @@ blogAppRouter.get('/', async (request, response) => {
 })
 
 blogAppRouter.post('/', userExtractor, async (request, response) => {
-    const decodedToken = await jwt.verify(request.token, process.env.SECRET)
-    if (!decodedToken.id) {
+    const user = await request.user
+    if (!user) {
         return response.status(401).json({ error: 'token invalid' })
     }
-
-    const user = await request.user
-    const blog = await new Blog({...request.body, user: user.id})
+    const blog = await new Blog({ ...request.body, user: user.id })
     const added = await blog.save()
 
     user.blogs = await user.blogs.concat(blog.id)
@@ -25,9 +23,10 @@ blogAppRouter.post('/', userExtractor, async (request, response) => {
 })
 
 blogAppRouter.delete('/:id', userExtractor, async (request, response) => {
-    const decodedToken = await jwt.verify(request.token, process.env.SECRET)
+    const blog = await Blog.findById(request.params.id)
+    const blogUserId = blog.user.toString()
 
-    if (decodedToken.id === request.user.id) {
+    if (request.user.id === blogUserId) {
         await Blog.findByIdAndDelete(request.params.id)
         response.status(204).end()
     } else {

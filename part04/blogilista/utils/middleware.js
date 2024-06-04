@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const User = require("../models/user");
 
 const errorHandler = (error, request, response, next) => {
-    logger.error(error.name)
+    logger.error(error.message)
 
     switch (error.name) {
         case 'CastError':

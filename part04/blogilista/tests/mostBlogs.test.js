@@ -2,7 +2,7 @@ const { test, describe } = require('node:test')
 const assert = require('node:assert')
 const listHelper = require('../utils/list_helper')
 
-describe('Checking for author with most blogs', () => {
+describe('Checking for author with most blogs.js', () => {
     const listOfBlogs = [
         {
             _id: '1',
@@ -46,7 +46,7 @@ describe('Checking for author with most blogs', () => {
         }
     ]
 
-    test('Returning author with most blogs', () => {
+    test('Returning author with most blogs.js', () => {
         const result = listHelper.mostBlogs(listOfBlogs)
         const expected = {
             author: "Writer 3",
