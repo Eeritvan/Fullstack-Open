@@ -30,7 +30,7 @@ const loginForm = ({ setUser, notification, setNotification }) => {
         <div>
             <h2><b> log in to application </b></h2>
             <Notification info={notification}/>
-            <form>
+            <form data-testid='loginform'>
                 <div>
                     username <input value={username} onChange={handleName}></input>
                 </div>
