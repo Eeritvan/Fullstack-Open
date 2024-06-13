@@ -4,7 +4,6 @@ import notificationContext from './NotificationContext'
 
 import NewAnecdote from './components/AnecdoteForm'
 import AnecdoteList from './components/AnecdoteList'
-import Filter from './components/Filter'
 import Notification from './components/Notification'
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
