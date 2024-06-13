@@ -2,21 +2,13 @@ import { useState, useEffect } from 'react'
 import interactions from './services/interactions'
 import './index.css'
 
-const Notification = ({message}) => {
-  if (message === null) {
-    return null
-  }
-
-  let type = "success"
-  if (message.includes("Del")) {
-    type = "error"
-  }
-
-  return (
-    <div className={type}>
-      {message}
-    </div>
-  )
+const Notification = ({message, color}) => {
+    if (!message) { return null }
+    return (
+        <div className={color}>
+            {message}
+        </div>
+    )
 }
 
 const Filter = ({newFilter, handleNewFilter}) => (
@@ -51,7 +43,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState([])
 
   const handleNewValue = event => setNewName(event.target.value)
   const handleNewNumber = event => setNewNumber(event.target.value)
@@ -65,37 +57,38 @@ const App = () => {
       .then(response => { setPersons(response) })
   }, [])
 
-  const setNotification = (message, name) => {
-    setErrorMessage(`${message} ${name}`)
-    setTimeout(() => { setErrorMessage(null)}, 5000)
+  const setNotification = (message, color) => {
+    setErrorMessage([message, color])
+    setTimeout(() => { setErrorMessage([])}, 5000)
   }
 
   const addPerson = event => {
     event.preventDefault()
   
-    interactions.getAll().then(allPersons => {
-      const maxId = Math.max(...allPersons.map(person => person.id))
+    interactions.getAll().then(() => {
       const newPerson = {
         name: newName,
-        number: newNumber,
-        id: (maxId + 1).toString()
+        number: newNumber
       }
     
-      if (namelist.includes(newName)) { 
+      if (namelist.includes(newName)) {
         updatePerson()
         return
       }
   
       interactions.add(newPerson)
-      setNotification("added", newName)
-
-      return (
-        setPersons(persons.concat(newPerson)),
-        setNewName(""),
-        setNewNumber("")
-      )
-    })
-  }
+        .then(x => {
+          newPerson.id = x
+          setNotification(`added ${newName}`, 'green')
+          setPersons(persons.concat(newPerson))
+          setNewName("")
+          setNewNumber("")
+        })
+        .catch(error => {
+            setNotification(error, 'red')
+        })
+      })
+    }
 
   const updatePerson = () => {
     if (confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
@@ -103,16 +96,20 @@ const App = () => {
       const updated = {...og, number: newNumber}
       interactions
         .uploadUpdate(updated)
-        .then(() =>       
+        .then(() =>
           setPersons(persons.map(person => person.name === newName ? updated : person)),
-          setNewName(""),
-          setNewNumber(""))
-          .catch(error => { console.log('POISTETTU JO')
-            setNotification("The following user was already deleted from the server:", newName)
-            return
+          setNewName(''),
+          setNewNumber(''))
+          .catch(error => {
+              if (!error) {
+                  setNotification(`The following user was already deleted from the server: ${newName}`, 'red')
+              } else {
+                  setNotification(error, 'red')
+              }
+              return
            })
 
-      setNotification("Updated", newName)
+      setNotification(`Updated ${newName}`, 'green')
     }
   }
 
@@ -121,7 +118,7 @@ const App = () => {
       interactions
         .deletePerson(id)
         setPersons(persons.filter(x => x.id !== id))
-        setNotification("Deleted", name)
+        setNotification(`Deleted ${name}`, 'red')
     }
   }
 
@@ -133,7 +130,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={errorMessage} />
+      <Notification message={errorMessage[0]} color={errorMessage[1]} />
       <Filter newfilter={newFilter} handleNewFilter={handleNewFilter} />
       <h3>Add a new</h3>
       <PersonForm addPerson={addPerson}
