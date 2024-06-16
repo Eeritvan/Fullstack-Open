@@ -18,3 +18,23 @@ export const useField = (type) => {
         reset
     }
 }
+
+
+export const useVisibility = (type) => {
+    const [visible, setVisible] = useState(true)
+
+    const hideWhenVisible = { display: visible ? 'none' : '' }
+    const showWhenVisible = { display: visible ? '' : 'none' }
+
+    const toggleVisibility = () => {
+        setVisible(!visible)
+    }
+
+    return {
+        type,
+        visible,
+        hideWhenVisible,
+        showWhenVisible,
+        toggleVisibility
+    }
+}

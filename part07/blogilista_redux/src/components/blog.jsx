@@ -1,21 +1,14 @@
-import { useState } from 'react'
 import blogService from '../services/blogs'
 import { likeBlog, deleteBlog } from '../reducers/blogsReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
+import { useVisibility } from '../hooks/index'
 
 const Blog = ({ blog }) => {
     const user = useSelector(state => state.user)
     const dispatch = useDispatch()
 
-    const [visible, setVisible] = useState(true)
-
-    const hideWhenVisible = { display: visible ? 'none' : '' }
-    const showWhenVisible = { display: visible ? '' : 'none' }
-
-    const toggleVisibility = () => {
-        setVisible(!visible)
-    }
+    const { hideWhenVisible, showWhenVisible, toggleVisibility } = useVisibility('boolean')
 
     const removeBlog = async () => {
         const confirm = window.confirm(`Remove blog ${blog.name} by ${blog.author}`)
