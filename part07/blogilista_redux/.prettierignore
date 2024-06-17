@@ -1,0 +1,7 @@
+# Ignore artifacts:
+.eslintignore
+.eslintrc.cjs
+.gitignore
+.index.html
+.package.json
+.package-lock.json

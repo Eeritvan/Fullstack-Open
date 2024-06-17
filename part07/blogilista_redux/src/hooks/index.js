@@ -1,40 +1,39 @@
 import { useState } from 'react'
 
 export const useField = (type) => {
-    const [value, setValue] = useState('')
+  const [value, setValue] = useState('')
 
-    const onChange = (event) => {
-        setValue(event.target.value)
-    }
+  const onChange = (event) => {
+    setValue(event.target.value)
+  }
 
-    const reset = () => {
-        setValue('')
-    }
+  const reset = () => {
+    setValue('')
+  }
 
-    return {
-        type,
-        value,
-        onChange,
-        reset
-    }
+  return {
+    type,
+    value,
+    onChange,
+    reset,
+  }
 }
 
-
 export const useVisibility = (type) => {
-    const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(true)
 
-    const hideWhenVisible = { display: visible ? 'none' : '' }
-    const showWhenVisible = { display: visible ? '' : 'none' }
+  const hideWhenVisible = { display: visible ? 'none' : '' }
+  const showWhenVisible = { display: visible ? '' : 'none' }
 
-    const toggleVisibility = () => {
-        setVisible(!visible)
-    }
+  const toggleVisibility = () => {
+    setVisible(!visible)
+  }
 
-    return {
-        type,
-        visible,
-        hideWhenVisible,
-        showWhenVisible,
-        toggleVisibility
-    }
+  return {
+    type,
+    visible,
+    hideWhenVisible,
+    showWhenVisible,
+    toggleVisibility,
+  }
 }
