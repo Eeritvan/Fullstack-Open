@@ -1,15 +1,19 @@
-import { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { CREATE_BOOK } from '../mutations'
 import { GET_AUTHORS, GET_BOOKS } from '../queries'
+import { useField } from '../hooks/hooks'
+import { useState } from "react"
 
 const NewBook = (props) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [published, setPublished] = useState('')
-  const [genre, setGenre] = useState('')
+  const {reset: resetTitle, ...title} = useField('')
+  const {reset: resetAuthor, ...author} = useField('')
+  const {reset: resetPublished, ...published} = useField('')
+  const {reset: resetGenre, ...genre} = useField('')
   const [genres, setGenres] = useState([])
-  const [ createBook ] = useMutation(CREATE_BOOK, { refetchQueries: [ { query: GET_AUTHORS }, { query: GET_BOOKS } ] })
+  const [createBook] = useMutation(CREATE_BOOK, {
+    update: (cache, response) => console.log(cache)
+  })
+  // vika tehtävä. Refetch ei ehkä toimi koska queries formaatti muuttunut (variablet)
 
   if (!props.show) {
     return null
@@ -18,18 +22,25 @@ const NewBook = (props) => {
   const submit = async (event) => {
     event.preventDefault()
 
-    await createBook({  variables: { title, author, published: Number(published), genres } })
+    await createBook({
+      variables: {
+        title: title.value,
+        author: author.value,
+        published: Number(published.value),
+        genres
+      }
+    })
 
-    setTitle('')
-    setPublished('')
-    setAuthor('')
+    resetTitle()
+    resetAuthor()
+    resetPublished()
+    resetGenre()
     setGenres([])
-    setGenre('')
   }
 
   const addGenre = () => {
-    setGenres(genres.concat(genre))
-    setGenre('')
+    setGenres(genres.concat(genre.value))
+    resetGenre()
   }
 
   return (
@@ -37,31 +48,18 @@ const NewBook = (props) => {
       <form onSubmit={submit}>
         <div>
           title
-          <input
-            value={title}
-            onChange={({ target }) => setTitle(target.value)}
-          />
+          <input {...title} />
         </div>
         <div>
           author
-          <input
-            value={author}
-            onChange={({ target }) => setAuthor(target.value)}
-          />
+          <input {...author} />
         </div>
         <div>
           published
-          <input
-            type="number"
-            value={published}
-            onChange={({ target }) => setPublished(target.value)}
-          />
+          <input {...published} type="number" />
         </div>
         <div>
-          <input
-            value={genre}
-            onChange={({ target }) => setGenre(target.value)}
-          />
+          <input {...genre} />
           <button onClick={addGenre} type="button">
             add genre
           </button>
