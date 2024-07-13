@@ -17,7 +17,7 @@ const parseArguments = (args: string[]): exerciseValues => {
     target: Number(args[2]),
     values: numbers
   };
-}
+};
 
 interface result {
   periodLength: number;
@@ -39,7 +39,7 @@ const getRating = (periodLength: number, trainingDays: number): number => {
     return 2;
   }
   return 3;
-}
+};
 
 const getRatingDesc = (rating: number): string => {
   switch (rating) {
@@ -54,9 +54,9 @@ const getRatingDesc = (rating: number): string => {
     default:
       return '???';
   }
-}
+};
 
-const calculateExercises = (targetValue: number, data: number[]): result => {
+export const calculateExercises = (targetValue: number, data: number[]): result => {
   const periodLength = data.length;
   const trainingDays = data.filter(x => x > 0).length;
   const success = periodLength === trainingDays;
@@ -74,13 +74,13 @@ const calculateExercises = (targetValue: number, data: number[]): result => {
     target,
     average,
   };
-}
+};
 
 try {
   const { target, values } = parseArguments(process.argv);
   console.log(calculateExercises(target, values));
 } catch (error: unknown) {
-  let errorMessage = 'Something bad happened.'
+  let errorMessage = 'Something bad happened.';
   if (error instanceof Error) {
     errorMessage += ' Error: ' + error.message;
   }
