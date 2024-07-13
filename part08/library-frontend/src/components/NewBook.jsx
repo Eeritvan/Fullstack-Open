@@ -1,8 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { CREATE_BOOK } from '../mutations'
-import { GET_AUTHORS, GET_BOOKS } from '../queries'
 import { useField } from '../hooks/hooks'
-import { useState } from "react"
+import { useState } from 'react'
 
 const NewBook = (props) => {
   const {reset: resetTitle, ...title} = useField('')
@@ -10,10 +9,7 @@ const NewBook = (props) => {
   const {reset: resetPublished, ...published} = useField('')
   const {reset: resetGenre, ...genre} = useField('')
   const [genres, setGenres] = useState([])
-  const [createBook] = useMutation(CREATE_BOOK, {
-    update: (cache, response) => console.log(cache)
-  })
-  // vika tehtävä. Refetch ei ehkä toimi koska queries formaatti muuttunut (variablet)
+  const [createBook] = useMutation(CREATE_BOOK, {})
 
   if (!props.show) {
     return null

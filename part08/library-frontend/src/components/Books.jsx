@@ -1,6 +1,6 @@
-import { useQuery } from "@apollo/client"
+import { useQuery } from '@apollo/client'
 import { GET_BOOKS } from '../queries'
-import { useState } from "react"
+import { useState } from 'react'
 
 const Books = (props) => {
   const [searchGenre, setSearchGenre] = useState('')

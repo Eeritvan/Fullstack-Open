@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react"
-import Authors from "./components/Authors"
-import Books from "./components/Books"
-import NewBook from "./components/NewBook"
-import Login from "./components/Login"
-import Recommended from "./components/Recommended"
-import { useApolloClient, useSubscription  } from "@apollo/client"
-import { BOOK_ADDED } from "./queries"
+import { useState, useEffect } from 'react'
+import Authors from './components/Authors'
+import Books from './components/Books'
+import NewBook from './components/NewBook'
+import Login from './components/Login'
+import Recommended from './components/Recommended'
+import { useApolloClient, useSubscription  } from '@apollo/client'
+import { BOOK_ADDED } from './queries'
 
 const App = () => {
   const [page, setPage] = useState("authors")
@@ -24,6 +24,12 @@ const App = () => {
     localStorage.clear()
     client.resetStore()
   }
+
+  useSubscription(BOOK_ADDED, {
+    onData: ({ data }) => {
+      window.alert(`A new book "${data.data.bookAdded.title}" by ${data.data.bookAdded.author.name}`)
+    }
+  })
 
   return (
     <div>
