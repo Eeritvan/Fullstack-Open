@@ -4,12 +4,24 @@ import { parseGender } from '../utils/utils';
 
 import { patientEntry, NonSensitivePatientEntry, newPatientEntry } from "../types/types";
 
+const getPatients = (): patientEntry[] => {
+  return patientData.map(x => ({ id: x.id,
+                                 name: x.name,
+                                 dateOfBirth: x.dateOfBirth,
+                                 gender: parseGender(x.gender),
+                                 occupation: x.occupation,
+                                 ssn: x.ssn,
+                                 entries: x.entries
+                                }));
+};
+
 const getNonSensitivePatients = (): NonSensitivePatientEntry[] => {
   return patientData.map(x => ({ id: x.id,
                                  name: x.name,
                                  dateOfBirth: x.dateOfBirth,
                                  gender: parseGender(x.gender),
-                                 occupation: x.occupation }));
+                                 occupation: x.occupation
+                                }));
 };
 
 const newPatient = ( entry:newPatientEntry ): patientEntry => {
@@ -22,6 +34,7 @@ const newPatient = ( entry:newPatientEntry ): patientEntry => {
 };
 
 export default {
+  getPatients,
   getNonSensitivePatients,
   newPatient
 };

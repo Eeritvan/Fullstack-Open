@@ -18,6 +18,12 @@ router.get('/patients', (_req, res) => {
   res.send(patientService.getNonSensitivePatients());
 });
 
+router.get('/patients/:id', (req, res) => {
+  const id: string = req.params.id
+  const patient = patientService.getPatients().filter(x => x.id === id)
+  res.send(patient)
+});
+
 router.post('/patients', (req, res) => {
   try {
     const patientEntry = toNewPatientEntry(req.body);
