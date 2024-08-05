@@ -1,0 +1,1 @@
+Exercises can be found in [this repo](https://github.com/Eeritvan/Fullstack-Open-part12).
