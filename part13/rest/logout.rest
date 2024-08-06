@@ -1,0 +1,3 @@
+POST http://localhost:3001/api/logout
+Content-Type: application/json
+Authorization: Bearer x

@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { Op } = require('sequelize')
 
-const { Blog, User } = require('../models')
+const { Blog, User, Session } = require('../models')
 
 const errorHandler = require('../middleware/errorhandler')
 const blogFinder = require('../middleware/blogfinder')
@@ -33,16 +33,43 @@ router.get('/', async (req, res) => {
   
 router.post('/', tokenExtractor, async (req, res) => {
   try {
-    const user = await User.findByPk(req.decodedToken.id);
-    const blog = await Blog.create({ ...req.body, userId: user.id });
-    res.send(blog);
+    const user = await User.findByPk(req.decodedToken.id)
+    if (user.disabled) {
+      return res.status(401).json({
+        error: 'account disabled'
+      })
+    }
+
+    const providedToken = req.get('authorization').split(' ')[1]
+    const savedToken = await Session.findOne({ where: { token: providedToken }})
+
+    if (!savedToken) {
+      return res.status(400).json({ error: 'Please log in to refresh token' })
+    }
+
+    const blog = await Blog.create({ ...req.body, userId: user.id })
+    return res.send(blog)
   } catch (e) {
-    res.status(400).send({ error: 'missing or invalid fields' });
+    return res.status(400).send({ error: 'missing or invalid fields' })
   }
 })
 
 router.delete('/:id', blogFinder, tokenExtractor, async (req, res) => {
   const user = await User.findByPk(req.decodedToken.id)
+  
+  if (user.disabled) {
+    return res.status(401).json({
+      error: 'account disabled'
+    })
+  }
+
+  const providedToken = req.get('authorization').split(' ')[1]
+  const savedToken = await Session.findOne({ where: { token: providedToken }})
+
+  if (!savedToken) {
+    return res.status(400).json({ error: 'Please log in to refresh token' })
+  }
+
   const id = req.blog.id
   const userId = req.blog.userId
 
@@ -54,7 +81,22 @@ router.delete('/:id', blogFinder, tokenExtractor, async (req, res) => {
   }
 })
 
-router.put('/:id', blogFinder, async (req, res) => {
+router.put('/:id', tokenExtractor, blogFinder, async (req, res) => {
+  const user = await User.findByPk(req.decodedToken.id)
+
+  if (user.disabled) {
+    return res.status(401).json({
+      error: 'account disabled'
+    })
+  }
+
+  const providedToken = req.get('authorization').split(' ')[1]
+  const savedToken = await Session.findOne({ where: { token: providedToken }})
+
+  if (!savedToken) {
+    return res.status(400).json({ error: 'Please log in to refresh token' })
+  }
+
   req.blog.likes += 1
   await req.blog.save()
   res.json({ likes: req.blog.likes })
