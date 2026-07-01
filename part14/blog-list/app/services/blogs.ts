@@ -32,3 +32,7 @@ export const getBlogs = () => {
 export const addBlog = (title: string, url: string, author: string) => {
   blogs.push({ id: nextId++, title, url, author, likes: 0 })
 }
+
+export const getBlogById = (id: number) => {
+  return blogs.find(b => b.id === id)
+}
