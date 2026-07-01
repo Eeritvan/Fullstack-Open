@@ -29,6 +29,6 @@ export const getBlogs = () => {
   return blogs
 }
 
-export const addBlog = (title: string, url: string, author: string, likes: number) => {
-  blogs.push({ id: nextId++, title, url, author, likes })
+export const addBlog = (title: string, url: string, author: string) => {
+  blogs.push({ id: nextId++, title, url, author, likes: 0 })
 }
