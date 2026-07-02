@@ -20,3 +20,9 @@ export const likeBlog = async (formData: FormData) => {
 
   redirect(`/blogs/${blogId}`)
 }
+
+export const searchBlogs = async (formData: FormData) => {
+  const query = formData.get("q");
+
+  redirect(`/blogs?q=${query}`)
+}

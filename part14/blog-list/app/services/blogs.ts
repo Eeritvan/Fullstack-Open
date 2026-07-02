@@ -1,4 +1,3 @@
-// id, title, author, url, and likes
 const blogs = [
   {
     id: 1,
