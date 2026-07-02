@@ -33,6 +33,13 @@ export const addBlog = (title: string, url: string, author: string) => {
   blogs.push({ id: nextId++, title, url, author, likes: 0 })
 }
 
-export const getBlogById = (id: number) => {
-  return blogs.find(b => b.id === id)
+export const getBlogById = (blogId: number) => {
+  return blogs.find(b => b.id === blogId)
+}
+
+export const addLikeToBlog = (blogId: number) => {
+  const blog = blogs.find(b => b.id === blogId)
+  if (blog) {
+    blog.likes += 1
+  }
 }
