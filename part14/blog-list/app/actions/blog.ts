@@ -16,7 +16,7 @@ export const createBlog = async (formData: FormData) => {
 
 export const likeBlog = async (formData: FormData) => {
   const blogId = Number(formData.get("blogId"))
-  addLikeToBlog(blogId)
+  await addLikeToBlog(blogId)
 
   redirect(`/blogs/${blogId}`)
 }

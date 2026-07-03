@@ -5,5 +5,12 @@ export const blogs = pgTable("blogs", {
   title: text("title").notNull(),
   author: text("author").notNull(),
   url: text("url").notNull(),
-  likes: integer("likes").default(0)
+  likes: integer("likes").default(0),
+  userId: integer("user_id").notNull().references(() => users.id),
+})
+
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  username: text("username").notNull().unique(),
+  name: text("name").notNull(),
 })
