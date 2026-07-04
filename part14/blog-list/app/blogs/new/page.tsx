@@ -1,7 +1,9 @@
 "use client"
 
 import { createBlog, CreateBlogState } from "@/app/actions/blog"
-import { useActionState } from "react"
+import { useNotification } from "@/app/context/NotificationContext"
+import { useRouter } from "next/navigation"
+import { useActionState, useEffect } from "react"
 
 const initialState: CreateBlogState = {
   values: {
@@ -9,11 +11,22 @@ const initialState: CreateBlogState = {
     author: "",
     url: ""
   },
-  errors: {}
+  errors: {},
+  success: false
 }
 
 const NewBlog = () => {
   const [state, formAction] = useActionState(createBlog, initialState)
+
+  const { showNotification } = useNotification()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (state.success) {
+      showNotification("blog added")
+      router.push("/blogs")
+    }
+  }, [state, showNotification, router])
 
   return (
     <div>
@@ -25,7 +38,7 @@ const NewBlog = () => {
             <input
               type="text"
               name="title"
-              defaultValue={state.values.title}
+              defaultValue={state.values?.title}
               required
             />
           </label>
@@ -37,7 +50,7 @@ const NewBlog = () => {
             <input
               type="text"
               name="url"
-              defaultValue={state.values.url}
+              defaultValue={state.values?.url}
               required
             />
           </label>
@@ -49,7 +62,7 @@ const NewBlog = () => {
             <input
               type="text"
               name="author"
-              defaultValue={state.values.author}
+              defaultValue={state.values?.author}
               required />
           </label>
         </div>

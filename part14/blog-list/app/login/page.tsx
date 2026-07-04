@@ -29,7 +29,6 @@ const LoginPage = () => {
   return (
     <div>
       <h2>Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>
@@ -43,6 +42,7 @@ const LoginPage = () => {
             <input type="password" name="password" required />
           </label>
         </div>
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <button type="submit">Login</button>
       </form>
     </div>
