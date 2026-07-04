@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-export default function LoginPage() {
+const LoginPage = () => {
   const router = useRouter()
   const [error, setError] = useState("")
 
@@ -48,3 +48,5 @@ export default function LoginPage() {
     </div>
   )
 }
+
+export default LoginPage

@@ -1,6 +1,6 @@
 import { registerUser } from "@/app/actions/users";
 
-export default function LoginPage() {
+const RegisterPage = () => {
   return (
     <div>
       <h2>Register</h2>
@@ -28,3 +28,5 @@ export default function LoginPage() {
     </div>
   )
 }
+
+export default RegisterPage
