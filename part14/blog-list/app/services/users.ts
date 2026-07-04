@@ -12,3 +12,7 @@ export const getUserAndBlogsByUsername = async (username: string) => {
     with: { blogs: true },
   })
 }
+
+export const createNewUser = async (username: string, name: string, passwordHash: string) => {
+  await db.insert(users).values({ username, name, passwordHash })
+}

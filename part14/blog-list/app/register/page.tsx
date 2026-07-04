@@ -1,0 +1,30 @@
+import { registerUser } from "@/app/actions/users";
+
+export default function LoginPage() {
+  return (
+    <div>
+      <h2>Register</h2>
+      <form action={registerUser}>
+        <div>
+          <label>
+            Username
+            <input type="text" name="username" required />
+          </label>
+        </div>
+        <div>
+          <label>
+            name
+            <input type="text" name="name" required />
+          </label>
+        </div>
+        <div>
+          <label>
+            Password
+            <input type="password" name="password" required />
+          </label>
+        </div>
+        <button type="submit">register</button>
+      </form>
+    </div>
+  )
+}
