@@ -27,23 +27,31 @@ const LoginPage = () => {
   }
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="mx-auto w-3xl m-6">
+      <h2 className="text-3xl font-bold my-4">Login</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Username
-            <input type="text" name="username" required />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password
-            <input type="password" name="password" required />
-          </label>
-        </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <button type="submit">Login</button>
+        <label className="flex flex-col">
+          Username
+          <input
+            type="text"
+            name="username"
+            required
+            className="rounded-md border p-2"
+          />
+        </label>
+        <label className="flex flex-col">
+          Password
+          <input
+            type="password"
+            name="password"
+            required
+            className="rounded-md border p-2"
+          />
+        </label>
+        {error && <p className="text-red-600">{error}</p>}
+        <button type="submit" className="w-20 rounded-md bg-green-500 mt-2 p-2">
+          Login
+        </button>
       </form>
     </div>
   )

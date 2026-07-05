@@ -3,31 +3,45 @@
 import { signOut, useSession } from "next-auth/react"
 import Link from "next/link"
 
+interface NavBarItemProps {
+  children: React.ReactNode
+  href: string
+}
+
+const NavBarItem = ({ children, href }: NavBarItemProps) => (
+  <Link
+    href={href}
+    className="hover:underline text-white"
+  >
+    {children}
+  </Link>
+)
+
 const NavBar = () => {
   const { data: session } = useSession()
 
   return (
-    <nav>
-      <Link href="/">home</Link>
-      {" "}
-      <Link href="/blogs">blogs</Link>
-      {" "}
-      <Link href="/users">users</Link>
-      {" "}
-      {session ? (
-        <>
-          <Link href="/blogs/new">create new</Link>
-          {" "}
-          <em>{session.user?.name} logged in</em>{" "}
-          <button onClick={() => signOut()}>logout</button>
-        </>
-      ) : (
-        <>
-          <Link href="/login">login</Link>
-          {" "}
-          <Link href="/register">register</Link>
-        </>
-      )}
+    <nav className="bg-neutral-600 h-16 items-center flex justify-between px-6">
+      <div className="flex gap-4">
+        <NavBarItem href="/"> home </NavBarItem>
+        <NavBarItem href="/blogs"> blogs </NavBarItem>
+        <NavBarItem href="/users"> users </NavBarItem>
+        {session && <NavBarItem href="/blogs/new"> create new </NavBarItem>}
+      </div>
+
+      <div className="flex gap-4">
+        {session ? (
+          <>
+            <em>{session.user?.name} logged in</em>{" "}
+            <button onClick={() => signOut()}>logout</button>
+          </>
+        ) : (
+          <>
+            <NavBarItem href="/login">login</NavBarItem>
+            <NavBarItem href="/register">register</NavBarItem>
+          </>
+        )}
+      </div>
     </nav>
   )
 }

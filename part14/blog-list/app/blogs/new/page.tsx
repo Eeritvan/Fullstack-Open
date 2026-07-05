@@ -29,45 +29,45 @@ const NewBlog = () => {
   }, [state, showNotification, router])
 
   return (
-    <div>
-      <h2>Add a new blog</h2>
+    <div className="mx-auto w-3xl m-6">
+      <h2 className="text-3xl font-bold my-4">Add a new blog</h2>
       <form action={formAction}>
-        <div>
-          <label>
-            Content
-            <input
-              type="text"
-              name="title"
-              defaultValue={state.values?.title}
-              required
-            />
-          </label>
-        </div>
-        {state.errors.title && <p style={{ color: "red" }}>{state.errors.title}</p>}
-        <div>
-          <label>
-            Url
-            <input
-              type="text"
-              name="url"
-              defaultValue={state.values?.url}
-              required
-            />
-          </label>
-        </div>
-        {state.errors.url && <p style={{ color: "red" }}>{state.errors.url}</p>}
-        <div>
-          <label>
-            Author
-            <input
-              type="text"
-              name="author"
-              defaultValue={state.values?.author}
-              required />
-          </label>
-        </div>
-        {state.errors.author && <p style={{ color: "red" }}>{state.errors.author}</p>}
-        <button type="submit">Create</button>
+        <label className="flex flex-col">
+          Content
+          <input
+            type="text"
+            name="title"
+            defaultValue={state.values?.title}
+            required
+            className="rounded-md border p-2"
+          />
+        </label>
+        {state.errors.title && <p className="text-red-600">{state.errors.title}</p>}
+        <label className="flex flex-col">
+          Url
+          <input
+            type="text"
+            name="url"
+            defaultValue={state.values?.url}
+            required
+            className="rounded-md border p-2"
+          />
+        </label>
+        {state.errors.url && <p className="text-red-600">{state.errors.url}</p>}
+        <label className="flex flex-col">
+          Author
+          <input
+            type="text"
+            name="author"
+            defaultValue={state.values?.author}
+            required
+            className="rounded-md border p-2"
+          />
+        </label>
+        {state.errors.author && <p className="text-red-600">{state.errors.author}</p>}
+        <button type="submit" className="w-20 rounded-md bg-green-500 mt-2 p-2">
+          Create
+        </button>
       </form>
     </div>
   )

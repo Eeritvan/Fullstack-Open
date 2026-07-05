@@ -16,19 +16,25 @@ const Blogs = async ({
     : allBlogs
 
   return (
-    <div>
-      <h2>Blogs</h2>
-      <form action={searchBlogs}>
-        <input placeholder='search' name="q" />
-        <button type='submit'>
-          submit
+    <div className="mx-auto w-3xl m-6">
+      <h2 className="text-3xl font-bold my-4">Blogs</h2>
+      <form action={searchBlogs} className="flex my-4 h-10 gap-2">
+        <input
+          name="q"
+          placeholder="search"
+          defaultValue={q}
+          className="w-full rounded-md border p-2"
+        />
+        <button type="submit" className="rounded-md bg-green-500 p-2">
+          search
         </button>
       </form>
-      <ul>
-        {blogs.map(blog => (
-          <li key={blog.id}>
-            <Link href={`/blogs/${blog.id}`}>
-              {blog.title} by {blog.author} ({blog.likes} likes)
+      <ul className="flex flex-col gap-2">
+        {blogs.map((blog) => (
+          <li key={blog.id} className="rounded-md border p-2 px-4">
+            <Link href={`/blogs/${blog.id}`} className="flex items-center gap-1">
+              <h3 className="text-xl font-semibold">{blog.title}</h3>
+              By {blog.author} ({blog.likes} likes)
             </Link>
           </li>
         ))}

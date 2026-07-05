@@ -11,14 +11,24 @@ const SingleBlog = async ({ params }: { params: Promise<{ id: string }> }) => {
   }
 
   return (
-    <div>
-      <a href={blog.url}>{blog.title}</a> by {blog.author} ({blog.likes} likes)
-      <form action={likeBlog}>
-        <input type="hidden" name="blogId" value={blog.id} />
-        <button type="submit">
-          like
-        </button>
-      </form>
+    <div className="mx-auto w-3xl m-6">
+      <h2 className="text-3xl font-bold mt-4 underline">
+        <a href={blog.url}>
+          {blog.title}
+        </a>
+      </h2>
+      <div>
+        by {blog.author}
+      </div>
+      <div className="mt-4">
+        {blog.likes} likes
+        <form action={likeBlog}>
+          <input type="hidden" name="blogId" value={blog.id} />
+          <button type="submit" className="rounded-md bg-green-500 p-2">
+            like
+          </button>
+        </form>
+      </div>
     </div>
   )
 }
