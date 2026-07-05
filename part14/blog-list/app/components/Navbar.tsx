@@ -32,8 +32,15 @@ const NavBar = () => {
       <div className="flex gap-4">
         {session ? (
           <>
-            <em>{session.user?.name} logged in</em>{" "}
-            <button onClick={() => signOut()}>logout</button>
+            <em className="self-center text-white">
+              {session.user?.name} logged in
+            </em>
+            <button
+              onClick={() => signOut()}
+              className="rounded-md bg-red-500 p-2 text-white"
+            >
+              logout
+            </button>
           </>
         ) : (
           <>
