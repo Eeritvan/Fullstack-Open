@@ -1,7 +1,7 @@
 "use server"
 
 import bcrypt from "bcryptjs"
-import { createNewUser } from "@/app/services/users"
+import { addNewToken, createNewUser } from "@/app/services/users"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
@@ -56,4 +56,13 @@ export const registerUser = async (
 
   revalidatePath("/users")
   redirect("/login")
+}
+
+export const generateNewApiToken = async (formData: FormData) => {
+  const userId = Number(formData.get("userId"))
+  const newToken = crypto.randomUUID();
+
+  await addNewToken(userId, newToken)
+
+  revalidatePath("/me")
 }

@@ -26,7 +26,12 @@ const NavBar = () => {
         <NavBarItem href="/"> home </NavBarItem>
         <NavBarItem href="/blogs"> blogs </NavBarItem>
         <NavBarItem href="/users"> users </NavBarItem>
-        {session && <NavBarItem href="/blogs/new"> create new </NavBarItem>}
+        {session &&
+          <>
+            <NavBarItem href="/blogs/new"> create new </NavBarItem>
+            <NavBarItem href="/me"> me </NavBarItem>
+          </>
+        }
       </div>
 
       <div className="flex gap-4">
