@@ -20,3 +20,10 @@ export const createNewUser = async (username: string, name: string, passwordHash
 export const addNewToken = async (userId: number, token: string) => {
   await db.update(users).set({ token }).where(eq(users.id, userId))
 }
+
+export const getUserDataByApiToken = async (apiToken: string) => {
+  return await db.query.users.findFirst({
+    where: eq(users.token, apiToken),
+    with: { blogs: true },
+  })
+}
