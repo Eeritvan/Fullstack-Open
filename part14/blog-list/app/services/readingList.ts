@@ -11,4 +11,5 @@ export const addBlogToReadingList = async (blogId: number) => {
   await db
     .insert(readingList)
     .values({ userId: user.id, blogId })
+    .onConflictDoNothing()
 }
