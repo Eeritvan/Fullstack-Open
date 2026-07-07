@@ -50,10 +50,3 @@ export const readingListRelations = relations(readingList, ({ one }) => ({
     references: [blogs.id],
   }),
 }))
-
-// export const readingListIndexes = [
-//   uniqueIndex("reading_list_user_blog_idx").on(
-//     readingList.userId,
-//     readingList.blogId,
-//   ),
-// ]

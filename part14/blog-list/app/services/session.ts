@@ -14,3 +14,22 @@ export const getCurrentUser = async () => {
     where: eq(users.username, session.user.email),
   })
 }
+
+export const getCurrentUserWithReadingList = async () => {
+  const session = await auth()
+
+  if (!session?.user?.email) {
+    return null
+  }
+
+  return db.query.users.findFirst({
+    where: eq(users.username, session.user.email),
+    with: {
+     readingList: {
+        with: {
+          blog: true,
+        },
+      },
+    },
+  })
+}

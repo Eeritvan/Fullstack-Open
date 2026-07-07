@@ -18,13 +18,17 @@ const SingleBlog = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <div className="mx-auto w-3xl m-6">
-      <h2 className="text-3xl font-bold mt-4 underline">
-        <a href={blog.url}>
-          {blog.title}
-        </a>
+      <h2 className="text-3xl font-bold mt-4">
+        {blog.title}
       </h2>
       <div>
         by {blog.author}
+      </div>
+      <div>
+        url:
+        <a href={blog.url} className="ml-1 underline text-blue-600 hover:text-blue-800 visited:text-purple-600">
+          {blog.title}
+        </a>
       </div>
       <div className="mt-4 flex gap-3 items-center">
         {blog.likes} likes
