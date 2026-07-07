@@ -4,6 +4,7 @@ import { redirect } from "next/navigation"
 import { addBlog, addLikeToBlog } from "@/app/services/blogs"
 import { revalidatePath } from "next/cache"
 import { auth } from "@/auth"
+import { addBlogToReadingList } from "../services/readingList"
 
 export interface CreateBlogState {
   values?: {
@@ -49,7 +50,8 @@ export const createBlog = async (
     return { errors, values: { title, author, url } }
   }
 
-  await addBlog(title, url, author)
+  const blogId = (await addBlog(title, url, author))[0].id
+  await addBlogToReadingList(blogId)
 
   revalidatePath("/blogs")
   return { errors, success: true }
