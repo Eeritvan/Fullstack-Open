@@ -1,6 +1,11 @@
-const Home = () => {
+import HomeContent from './HomeContent.mdx'
+
+const Root = () => {
   return (
-    <h2>blog app</h2>
+    <div className='mx-20 markdown'>
+      <HomeContent />
+    </div>
   )
 }
-export default Home
+
+export default Root
