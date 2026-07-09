@@ -27,3 +27,7 @@ export const getUserDataByApiToken = async (apiToken: string) => {
     with: { blogs: true },
   })
 }
+
+export const emptyUsersTable = async () => {
+  await db.delete(users)
+}

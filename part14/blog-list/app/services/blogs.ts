@@ -35,3 +35,7 @@ export const getBlogById = async (blogId: number) => {
     where: eq(blogs.id, blogId)
   })
 }
+
+export const emptyBlogsTable = async () => {
+  await db.delete(blogs)
+}

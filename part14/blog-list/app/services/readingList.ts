@@ -31,3 +31,7 @@ export const markBlogAsRead = async (blogId: number) => {
       )
     )
 }
+
+export const emptyReadingListTable = async () => {
+  await db.delete(readingList)
+}
